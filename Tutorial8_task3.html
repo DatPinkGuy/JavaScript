@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>Untitled Document</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <canvas id="sCanvas" width="550" height="550" style="border: solid;"></canvas>
+    <br>
+    <input type = "button", id = "button", value = "Add ball", onclick = "addSphere()">
+    <script type="text/javascript">
+        "use strict";
+        var movingObjects = []; //creates array
+        var i; //for usage in loop
+        var c = document.getElementById("sCanvas");
+        var ctx = c.getContext("2d");
+        var cHeight = sCanvas.height;
+        var cWidth = sCanvas.width;
+        
+        
+        class Sphere {
+            constructor(aRadius){
+                this.radius = (aRadius || 15);
+                this.color = "hsl(" + 360 * Math.random() + ",50%,50%)"
+                this.xPos = Math.round(50 + 450 * Math.random());
+                this.yPos = Math.round(50 + 450 * Math.random());
+                this.speedX = Math.round(1 + 10 * Math.random());
+                this.speedY = Math.round(1 + 10 * Math.random());
+            }
+                
+                drawMe() 
+                {
+                    ctx.beginPath();
+                    ctx.arc(this.xPos, this.yPos ,this.radius, 0, Math.PI *2, true);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+                
+                moveMe()
+                {
+                    this.yPos += this.speedY;
+                    this.xPos += this.speedX;
+                    
+                    if(this.yPos > (cHeight - this.radius)) 
+                        {
+                            this.speedY = -this.speedY;
+                        }
+                    else if(this.yPos < (0 + this.radius)) 
+                        {
+                            this.speedY = -this.speedY;
+                        }
+                    if(this.xPos > (cWidth - this.radius)) 
+                        {
+                            this.speedX = -this.speedX;
+                        }
+                    else if(this.xPos < (0+this.radius)) 
+                        {
+                            this.speedX = -this.speedX;
+                        }
+                }
+            
+        }
+        var ball = new Sphere();
+        var ball2 = new Sphere(30);
+        
+        function render()
+        {
+            requestAnimationFrame(render);
+            ctx.clearRect(0,0,cWidth,cHeight);
+            for (i = 0;i < movingObjects.length; i++) //loop that allows to create more balls, this loops works only after addSphere function
+                {
+                    movingObjects[i].drawMe(); //draws a new balls
+                    movingObjects[i].moveMe(); //moves the new ball
+                }
+            ball.drawMe();
+            ball.moveMe();
+            ball2.drawMe();
+            ball2.moveMe();
+            
+        }
+        function addSphere()
+        {
+            movingObjects.push(new Sphere(20)); //same as creating variable ball, but can be reused
+        }
+        
+        render();
+    
+    </script>
+
+</body>
+</html>

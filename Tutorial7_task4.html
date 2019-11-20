@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>Friendface</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	
+	<link href="mainstyle.css" rel="stylesheet" />
+    
+    <script>
+    function clearErrors(){
+        
+    }    
+        
+    function process(){
+        clearErrors();
+        
+        var output = "";
+						
+			if(document.getElementById("fName").value == ""){
+				document.getElementById("firstnameError").innerHTML = "First name required";				
+			}
+			if(document.getElementById("lName").value == ""){
+				document.getElementById("lastnameError").innerHTML = "Last name required";				
+			}
+            if(document.getElementById("email").value == ""){
+				document.getElementById("emailError").innerHTML = "Email required";				
+			}
+            if(document.getElementById("confEmail").value == ""){
+				document.getElementById("confirmemailError").innerHTML = "Confirm Email";				
+			}
+            if(document.getElementById("pass").value == ""){
+				document.getElementById("passError").innerHTML = "Password required";				
+			}
+            if(document.getElementById("confPass").value == ""){
+				document.getElementById("confirmpassError").innerHTML = "Confirm Password";				
+			}
+            if(document.getElementById("dateob").value == ""){
+				document.getElementById("dateobError").innerHTML = "Date of Birth required";				
+			}
+        
+        
+			output += "\nFirst name: " + document.getElementById("fName").value;
+			output += "\nLast name: " + document.getElementById("lName").value;
+            output += "\nEmail: " + document.getElementById("email").value;
+            output += "\nCountry: " + document.getElementById("country").value;
+            output += "\nTown: " + document.getElementById("town").value;
+           // output += "\nUsername: " + document.getElementById("username").value;
+			
+			if(document.getElementById("male").checked == true){
+				output += "\nSex: Male";							
+			}
+			else{
+				output += "\nSex: Female";												
+			}
+        
+            output += "\nDate of Birth: " + document.getElementById("dateob").value;
+            output += "\nAbout: " + document.getElementById("aboutMe").value;
+			
+			//var education = document.getElementById("education");
+			//output += "\nEducation: " + education.options[education.selectedIndex].text;
+			
+	
+			document.getElementById("output").innerHTML = output;
+        
+        
+    }
+    
+    </script>
+</head>
+<body>
+    <h1>Friendface</h1>
+
+    <p>--------------------------------------------------------------</p>
+    <input type = "text" id = "fName" placeholder = "First Name">
+    <input type = "text" id = "lName" placeholder = "Last Name">* <span id="firstnameError"></span>* <span id="lastnameError"></span>
+    <br/><br/>
+    <input type = "text" id = "email" placeholder = "Email">
+    <input type = "text" id = "confEmail" placeholder = "Confirm Email">* <span id="emailError"></span>* <span id="confirmemailError"></span>
+    <br/><br/>
+    <input type = "password" id = "pass" placeholder = "Password">
+    <input type = "password" id = "confPass" placeholder = "Confirm Password">* <span id="passError"></span>* <span id="confirmpassError"></span>
+    <br/>
+    <p>--------------------------------------------------------------</p>
+    <input type = "text" id = "country" placeholder = "Country">
+    <input type = "text" id = "town" placeholder = "Town">
+    <br/>
+    <p>
+        Gender:
+        <input type = "radio" name = "gender" value = "male" id="male" checked = true>Male
+        <input type = "radio" name = "gender" value = "female" id="female">Female
+    </p>
+    <p>
+        Date of Birth:
+        <input type = "date" id = "dateob">* <span id="dateobError"></span>
+    </p>
+    <p>About me:</p>
+    <textarea id = "aboutMe" style ="width: 300px; height:100px" placeholder="Write a little bit about yourself"></textarea>
+    <p>--------------------------------------------------------------</p>
+    <input type = "button" value = "Register" onclick="process()">
+           
+    <p>
+    <textarea name="output" id="output" rows="10" cols="100"></textarea>
+    </p>
+</body>
+</html>

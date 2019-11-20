@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Last Week</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+</head>
+<body>
+    <canvas id="sCanvas" width="400" height="400" style="border: solid;"></canvas>
+    <script type="text/javascript">
+        "use strict";
+        var c = document.getElementById("sCanvas");
+        var ctx = sCanvas.getContext("2d");
+        var cHeight = sCanvas.height;
+        var cWidth = sCanvas.width;
+        var score = 0;
+        var playerimg = new Image();
+        playerimg.src = "player.jpeg";
+        var enemyimg = new Image();
+        enemyimg.src = "enemy.png";
+        var back = new Image();
+        back.src = "maxresdefault.jpg";
+        
+        class Box{
+                constructor(x,y){
+                    this.width = (40);
+                    this.height = (40);
+                    this.color = "red";
+                    this.xPos = x;
+                    this.yPos = y;
+                    this.speed = 3;
+                    this.back = playerimg;
+                }
+
+                drawMe(){
+                    ctx.beginPath();
+                    ctx.rect(this.xPos,this.yPos,this.width,this.height);
+                   // ctx.fillStyle = this.color;
+                   // ctx.fill();
+                    ctx.drawImage(playerimg, this.xPos, this.yPos)
+                }
+        }
+        class BoxEnemy{
+                constructor(x,y){
+                    this.width = (40);
+                    this.height = (40);
+                    this.color = "green";
+                    this.xPos = x;
+                    this.yPos = y;
+                }
+
+                drawMe(){
+                    ctx.beginPath();
+                    ctx.rect(this.xPos,this.yPos,this.width,this.height);
+                    //ctx.fillStyle = this.color;
+                    //ctx.fill();
+                    ctx.drawImage(enemyimg, this.xPos, this.yPos);
+                }
+        }
+        
+        
+        var player = new Box(180,180);
+        var enemy = new BoxEnemy(Math.floor(Math.random() * 360) + 1,Math.floor(Math.random() * 360) + 1);
+        
+        
+        var keysDown = []; //empty array to store which keys are being held down
+
+        
+        function restart(){
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            //ctx.fillStyle = "cyan";
+            //ctx.fillRect(0,0,cHeight,cWidth);
+            //ctx.fill();
+            ctx.drawImage(back,0,0);
+            player.xPos = 180;
+            player.yPos = 180;
+            enemy = new BoxEnemy(Math.floor(Math.random() * 360) + 1,Math.floor(Math.random() * 360) + 1);
+            score++;
+        }
+
+        window.addEventListener("keydown", function (event) {
+           keysDown[event.keyCode] = true; //store the code for the key being pressed
+        });
+
+        window.addEventListener("keyup", function (event) {
+         delete  keysDown[event.keyCode] ;
+        });
+        
+        
+            function checkKeys() {
+
+            if (keysDown[87]) {
+                if(player.yPos > 0){
+                    player.yPos -= player.speed; //w
+                }
+            }
+             
+            if (keysDown[68]) {
+                if(player.xPos < (cHeight-player.height) ){
+                    player.xPos += player.speed; //d
+                 }
+            }
+            if (keysDown[65]) {
+                if(player.xPos > 0){
+                    player.xPos -= player.speed; //a
+                }
+            }
+            if (keysDown[83]) {
+                if(player.yPos < (cHeight-player.height) ){
+                    player.yPos += player.speed; //s
+                 }
+            }
+                if(player.yPos + player.height > enemy.yPos && player.xPos + player.width > enemy.xPos &&
+                   player.yPos < enemy.yPos + enemy.height && player.xPos < enemy.xPos + enemy.width)
+                    {
+                        restart();
+                    }
+            }
+                    
+                    
+            function scoreBoard(){
+            ctx.font = "bold 20px Arial";
+            ctx.fillStyle = "red";
+            ctx.fillText(score,10,20);
+            }
+        
+                    
+                    
+            function render() {
+            requestAnimationFrame(render);
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            //ctx.fillStyle = "cyan";
+            //ctx.fillRect(0,0,cHeight,cWidth);
+            //ctx.fill();
+            ctx.drawImage(back,0,0);
+            player.drawMe();
+            enemy.drawMe();
+            checkKeys();
+            scoreBoard();
+            }
+    
+        render();
+                
+                
+    </script>
+</body>
+</html>
